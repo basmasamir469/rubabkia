@@ -78,16 +78,16 @@ authToken: any;
 
     registeruser(data:any){
     const headers=new HttpHeaders()
-  return this.http.post(environment.apiUrl+'/api/register',data,{
+  return this.http.post('http://127.0.0.1:8000/api/register',data,{
     headers:headers
      }
   );
     }
     loginuser(data:any){
-      return this.http.post(environment.apiUrl+'/api/login',data)
+      return this.http.post('http://127.0.0.1:8000/api/login',data)
         }
     forgetpass(email:string){
-      return this.http.post(environment.apiUrl+'/api/forget',{email:email})
+      return this.http.post('http://127.0.0.1:8000/api/forget',{email:email})
     }
     resetpass(token:any,password:string,confirmpass:string){
       const data={
@@ -96,23 +96,23 @@ authToken: any;
         confirmpassword:confirmpass
       }
 
-      return this.http.post(environment.apiUrl+'/api/reset',data)
+      return this.http.post('http://127.0.0.1:8000/api/reset',data)
     }
 
     verifyemail(token:any):Observable<any>{
      const header = new HttpHeaders({'Content-Type':'application/json','Authorization': 'Bearer ' + token})
-      return this.http.post(environment.apiUrl+'/api/email/verification-notification',null,{headers:header})
+      return this.http.post('http://127.0.0.1:8000/api/email/verification-notification',null,{headers:header})
     }
     completeverify(token:any,id:any,hash:any):Observable<any>{
       const header = new HttpHeaders({'Content-Type':'application/json','Authorization': 'Bearer ' + token})
 
-       return this.http.get(environment.apiUrl+'/api/verify-email/'+id+'/'+hash,{headers:header})
+       return this.http.get('http://127.0.0.1:8000/api/verify-email/'+id+'/'+hash,{headers:header})
      }
 
      edit(data:any):Observable<UserData>{
       const headers = new HttpHeaders({'Authorization': 'Bearer ' +localStorage.getItem('token')})
 
-       return this.http.post<UserData>(environment.apiUrl+'/api/editProfile',data,{headers})
+       return this.http.post<UserData>('http://127.0.0.1:8000/api/editProfile',data,{headers})
      }
 
 //  addedprudect(product:Product){
@@ -141,7 +141,7 @@ authToken: any;
       const headers = new HttpHeaders({'Content-Type': 'application/json','Authorization':'Bearer '+localStorage.getItem('token')})
       const body = { 'product_id':product.id,'seller_id':product.userid};
 
-      return this.http.post<NotificationData>(environment.apiUrl+'/api/buy/'+product.id,body,{headers}).pipe(
+      return this.http.post<NotificationData>('http://127.0.0.1:8000/api/buy/'+product.id,body,{headers}).pipe(
         tap(()=>{
           this._refreshNeeded.next()
         })
@@ -153,7 +153,7 @@ authToken: any;
     request(id:number):Observable<NotificationData>{
       const headers = new HttpHeaders({'Content-Type': 'application/json','Authorization':'Bearer '+localStorage.getItem('token')})
 
-      return this.http.get<NotificationData>(environment.apiUrl+'/api/notification/'+id,{headers})
+      return this.http.get<NotificationData>('http://127.0.0.1:8000/api/notification/'+id,{headers})
     }
 
     accept(nof:Notifi):Observable<Notifi[]>{
@@ -165,7 +165,7 @@ authToken: any;
         'Authorization':'Bearer '+localStorage.getItem('token')
       });
 
-      return this.http.post<Notifi[]>(environment.apiUrl+'/api/purchases/'+nof.id_not,nof,{headers}).pipe(
+      return this.http.post<Notifi[]>('http://127.0.0.1:8000/api/purchases/'+nof.id_not,nof,{headers}).pipe(
         tap(()=>{
           this._refreshNeeded.next()
         })
@@ -180,7 +180,7 @@ authToken: any;
         'Authorization':'Bearer '+localStorage.getItem('token')
       });
 
-      return this.http.delete<Notifi[]>(environment.apiUrl+'/api/nof/'+id,{headers}).pipe(
+      return this.http.delete<Notifi[]>('http://127.0.0.1:8000/api/nof/'+id,{headers}).pipe(
         tap(()=>{
           this._refreshNeeded.next()
         })
