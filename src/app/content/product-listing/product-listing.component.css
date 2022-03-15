@@ -1,7 +1,7 @@
 
-/* .products{
-    position: relative;
-} */
+.products{
+    height:100vh;
+}
 .mynewform{
     display: flex;
 }
